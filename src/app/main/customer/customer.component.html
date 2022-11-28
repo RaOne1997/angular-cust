@@ -1,0 +1,76 @@
+<div [@routerTransition]>
+    <div class="container">
+        <div class="row">
+            <div class="col">
+                <div class=" d-flex justify-content-between">
+                    <div class="">
+                        <nav style="--bs-breadcrumb-divider: '';" aria-label="breadcrumb">
+                            <ol class="breadcrumb fs-5">
+                              <li class="breadcrumb-item active"> <span> {{"Customers" | localize}} </span> </li>
+                              <li class="breadcrumb-item " aria-current="page"> Manage cutomer and customer user </li>
+                            </ol>
+                        </nav>
+                    </div>
+                    <div class="">
+                        <div class="btn btn-warning" (click)="createCustomerModal.show()"> <i class="bi bi-plus fs-1"></i>  Create New Customer </div>
+                    </div>
+                </div>
+    
+            </div>
+        </div>
+    </div>
+    <div class="kt-content  kt-grid__item kt-grid__item--fluid kt-grid kt-grid--hor">
+        <div class="kt-subheader kt-grid__item">
+            <div [class]="containerClass">
+                <div class="kt-subheader__main">
+                    <h3 class="kt-subheader__title fs-4">
+                        <span>{{"Customers" | localize}}</span>
+                    </h3>
+                </div>
+            </div>
+        </div>
+        <div [class]="containerClass + ' kt-grid__item kt-grid__item--fluid'">
+            <div class="kt-portlet kt-portlet--mobile">
+                <div class="kt-portlet__body  kt-portlet__body--fit">
+                    <div class="table-responsive">
+                        <table class="table table-sm">
+                            <thead>
+                              <tr class="fs-5 fw-bold">
+                                <th> Customer Name </th>
+                                <th> Email </th>
+                                <th> Address </th>
+                                <th> Registration Date </th>
+                                <th> Actions </th>
+                              </tr>
+                            </thead>
+                            <tbody>
+                              <tr *ngFor="let customer of customers">
+                                <th> {{customer.name}} </th>
+                                <td>{{customer.emailAddress}}</td>
+                                <td>{{ customer.address }}</td>
+                                <td> {{ customer.creationTime | date: 'dd MMM yyyy' }} </td>
+                                <td> 
+                                    <div class="btn-group dropstart">
+                                        <a type="button" class="btn" data-bs-toggle="dropdown" aria-expanded="false">
+                                            <i class="bi bi-three-dots"></i>
+                                        </a>
+                                        <ul class="dropdown-menu dropdown-menu-sm">
+                                            <li><a class="dropdown-item" style="cursor: pointer;" (click)="customerUserModal.show(customer.id)" > <i class="bi bi-aspect-ratio me-2"></i> View User</a></li>
+                                            <li><button class="dropdown-item" (click)="editCustomerModal.show(customer.id)" > <i class="bi bi-pencil me-2"></i> Edit</button></li>
+                                            <li><button class="dropdown-item" (click)="deleteCustomer(customer)" >  <i class="bi bi-trash me-2"></i> Delete </button></li>
+                                        </ul>
+                                      </div>
+                                </td>
+                              </tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <app-create-customer-modal #createCustomerModal (modalSave)="getCustomer()">  </app-create-customer-modal>
+        <app-customer-user-modal #customerUserModal >  </app-customer-user-modal>
+        <app-edit-customer-modal #editCustomerModal (modalSave)="getCustomer()"></app-edit-customer-modal>
+    </div>
+</div>

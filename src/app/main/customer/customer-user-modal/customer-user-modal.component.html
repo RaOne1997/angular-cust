@@ -1,0 +1,55 @@
+<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog"
+    aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h4 class="modal-title">
+                    <span>{{"Customer User" | localize}}</span>
+                </h4>
+
+                <form autocomplete="off">
+                    <div class="kt-form">
+                        <div class="row align-items-center kt-margin-b-10">
+                            <div class="col-xl-12">
+                                <div class="form-group align-items-center">
+                                    <div class="input-group">
+                                        <input [(ngModel)]="filter" name="filterText" autoFocus class="form-control" [placeholder]="l('SearchWithThreeDot' | localize)" type="text">
+                                        <span class="input-group-btn">
+                                            <button class="btn btn-primary" type="submit"><i class="flaticon-search-1"></i></button>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+
+                <button type="button" class="close" (click)="close()" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div class="modal-body">
+
+                <div class="table table-responsive ">
+                    <table class="table">
+                        <thead>
+                            <tr class="fs-5 fw-bold">
+                                <th>First name</th>
+                                <th>Last name</th>
+                                <th>Email</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let cu of customeruserlist">
+                                <td>{{cu.name}}</td>
+                                <td>{{cu.surname}}</td>
+                                <td>{{cu.emailAddress}}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>

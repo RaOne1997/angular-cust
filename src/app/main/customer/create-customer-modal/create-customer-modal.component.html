@@ -1,0 +1,83 @@
+<div bsModal #modal="bs-modal" (onShown)="onShown()" class="modal fade" tabindex="-1" role="dialog" aria-labelledby="modal" aria-hidden="true" [config]="{backdrop: 'static'}">
+    <div class="modal-dialog modal-lg">
+        <div class="modal-content">
+            <!-- #customerForm="ngForm" -->
+            <form *ngIf="active"  novalidate (ngSubmit)="save()" [formGroup]="productForm">
+                <div class="modal-header">
+                    <h4 class="modal-title">
+                        <span>{{"CreateNewCustomer" | localize}}</span>
+                    </h4>
+                    <button type="button" class="close" (click)="close()" aria-label="Close">
+                        <span aria-hidden="true">&times;</span>
+                    </button>
+                </div>
+                <div class="modal-body">
+                    <div class="container">
+                        <div class="row ">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{"Customer Name" | localize}}</label>
+                                    <input #nameInput class="form-control" type="text" id="name" name="name" formControlName="name" required maxlength="32">
+                                </div>
+                                
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{"Customer Email" | localize}}</label>
+                                    <input class="form-control" type="email" id="emailAddress" name="emailAddress" formControlName="emailAddress" required maxlength="255" pattern="^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{1,})+$">
+                                </div>
+
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{"Address" | localize}}</label>
+                                    <input class="form-control" type="text" name="address" id="address" formControlName="address" required maxlength="255" >
+                                </div>
+
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label>{{"Registration Date" | localize}}</label>
+                                    <input class="form-control" type="text" value="{{todaydate.toDateString()}}"   maxlength="255" disabled >
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row mt-4">
+                            <div class="col-12 mt-4">
+                              <label for="UserMenu" class="form-label"> {{"Add User" | localize}} </label>
+                            </div>
+                            
+                            <div class="col-md-3 ">
+                                <div class="" formArrayName="quantities">
+                                    <div class="mb-2"  *ngFor="let quantity of quantities().controls; let i=index" [formGroupName]="i" >
+                                        <select class="form-select" aria-label="UserMenu" formControlName="userId" >
+                                          <option value="0"> Select User </option>
+                                          <option *ngFor="let user of userslist" value="{{user.id}}"> {{user.name}} </option>
+                                          
+                                        </select>
+                                    </div>
+
+                                </div>
+                            </div>
+                            <div class="col-md-3 ">
+                              <button class="btn btn-danger" type="button" (click)="addQuantity()" >
+                                <i class="bi bi-plus"></i>
+                                  Add User
+                              </button>
+                            </div>
+                         </div>
+        
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button [disabled]="saving" type="button" class="btn btn-secondary" (click)="close()">{{"Cancel" | localize}}</button>
+                    <button type="submit" class="btn btn-primary"  [buttonBusy]="saving" [busyText]="l('SavingWithThreeDot' | localize)"><i class="fa fa-save"></i> <span>{{"Save" | localize}}</span></button>
+                </div>
+
+                
+            </form>
+        </div>
+    </div>
+</div>
