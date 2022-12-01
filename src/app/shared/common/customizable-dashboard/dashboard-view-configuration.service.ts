@@ -14,6 +14,8 @@ import { WidgetSubscriptionExpiringTenantsComponent } from './widgets/widget-sub
 import { WidgetHostTopStatsComponent } from './widgets/widget-host-top-stats/widget-host-top-stats.component';
 import { FilterDateRangePickerComponent } from './filters/filter-date-range-picker/filter-date-range-picker.component';
 import { WidgetTopStatsComponent } from './widgets/widget-top-stats/widget-top-stats.component';
+import { FilterHelloWorldComponent } from '@app/admin/dashboard/Costum dashbord/filter-hello-world/filter-hello-world.component';
+import { WidgetHelloWorldComponent } from './widget-hello-world/widget-hello-world.component';
 
 @Injectable({
     providedIn: 'root',
@@ -72,6 +74,12 @@ export class DashboardViewConfigurationService {
         );
         //add your tenant side widgets here
 
+        let helloWorld = new WidgetViewDefinition(
+            DashboardCustomizationConst.widgets.tenant.helloWorld,
+            WidgetHelloWorldComponent,
+          )
+          this.WidgetViewDefinitions.push(helloWorld);  
+
         let incomeStatistics = new WidgetViewDefinition(
             DashboardCustomizationConst.widgets.host.incomeStatistics,
             WidgetIncomeStatisticsComponent
@@ -97,6 +105,12 @@ export class DashboardViewConfigurationService {
             WidgetHostTopStatsComponent
         );
         //add your host side widgets here
+        let filterHelloWorld = new WidgetFilterViewDefinition(
+            DashboardCustomizationConst.filters.filterHelloWorld,
+            FilterHelloWorldComponent//the component of filter
+          );
+          
+          this.widgetFilterDefinitions.push(filterHelloWorld);
 
         this.WidgetViewDefinitions.push(generalStats);
         this.WidgetViewDefinitions.push(dailySales);

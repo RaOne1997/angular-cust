@@ -98,6 +98,8 @@ import { ChangeProfilePictureModalModule } from './shared/layout/profile/change-
 import { ToggleDarkModeComponent } from './shared/layout/toggle-dark-mode/toggle-dark-mode.component';
 import { ThemeXLayoutComponent } from './shared/layout/themes/themeX/theme-x-layout/theme-x-layout.component';
 import { ThemeXBrandComponent } from './shared/layout/themes/themeX/theme-x-brand/theme-x-brand.component';
+import { FilterHelloWorldComponent } from './admin/dashboard/Costum dashbord/filter-hello-world/filter-hello-world.component';
+import { WidgetHelloWorldComponent } from './shared/common/customizable-dashboard/widget-hello-world/widget-hello-world.component';
 
 
 @NgModule({
@@ -162,6 +164,12 @@ import { ThemeXBrandComponent } from './shared/layout/themes/themeX/theme-x-bran
         ThemeXBrandComponent,
       
     ],
+
+    entryComponents: [
+        
+         FilterHelloWorldComponent,//add filter
+         WidgetHelloWorldComponent//add widget
+     ],
     imports: [
         CommonModule,
         FormsModule,
@@ -202,4 +210,7 @@ import { ThemeXBrandComponent } from './shared/layout/themes/themeX/theme-x-bran
         },
     ]
 })
-export class AppModule {}
+export class AppModule {
+
+    
+}

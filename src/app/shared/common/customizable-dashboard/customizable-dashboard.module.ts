@@ -30,6 +30,7 @@ import { CountoModule } from 'angular2-counto';
 import { TableModule } from 'primeng/table';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { SubheaderModule } from '../sub-header/subheader.module';
+import { WidgetHelloWorldComponent } from './widget-hello-world/widget-hello-world.component';
 
 @NgModule({
     imports: [
@@ -69,6 +70,7 @@ import { SubheaderModule } from '../sub-header/subheader.module';
         FilterDateRangePickerComponent,
         AddWidgetModalComponent,
         WidgetComponentBaseComponent,
+        WidgetHelloWorldComponent,
     ],
 
     providers: [DashboardViewConfigurationService],

@@ -4,9 +4,10 @@ import { AppSharedModule } from '@app/shared/app-shared.module';
 import { HostDashboardRoutingModule } from './host-dashboard-routing.module';
 import { HostDashboardComponent } from './host-dashboard.component';
 import { CustomizableDashboardModule } from '@app/shared/common/customizable-dashboard/customizable-dashboard.module';
+import { FilterHelloWorldComponent } from './Costum dashbord/filter-hello-world/filter-hello-world.component';
 
 @NgModule({
-    declarations: [HostDashboardComponent],
+    declarations: [HostDashboardComponent, FilterHelloWorldComponent],
     imports: [AppSharedModule, AdminSharedModule, HostDashboardRoutingModule, CustomizableDashboardModule],
 })
 export class HostDashboardModule {}

@@ -11808,6 +11808,62 @@ export class TenantDashboardServiceProxy {
     }
 
     /**
+     * @param name (optional) 
+     * @return Success
+     */
+    getHelloWorldData(name: string | undefined): Observable<GetHelloWorldOutput> {
+        let url_ = this.baseUrl + "/api/services/app/TenantDashboard/GetHelloWorldData?";
+        if (name === null)
+            throw new Error("The parameter 'name' cannot be null.");
+        else if (name !== undefined)
+            url_ += "Name=" + encodeURIComponent("" + name) + "&";
+        url_ = url_.replace(/[?&]$/, "");
+
+        let options_ : any = {
+            observe: "response",
+            responseType: "blob",
+            headers: new HttpHeaders({
+                "Accept": "text/plain"
+            })
+        };
+
+        return this.http.request("get", url_, options_).pipe(_observableMergeMap((response_ : any) => {
+            return this.processGetHelloWorldData(response_);
+        })).pipe(_observableCatch((response_: any) => {
+            if (response_ instanceof HttpResponseBase) {
+                try {
+                    return this.processGetHelloWorldData(<any>response_);
+                } catch (e) {
+                    return <Observable<GetHelloWorldOutput>><any>_observableThrow(e);
+                }
+            } else
+                return <Observable<GetHelloWorldOutput>><any>_observableThrow(response_);
+        }));
+    }
+
+    protected processGetHelloWorldData(response: HttpResponseBase): Observable<GetHelloWorldOutput> {
+        const status = response.status;
+        const responseBlob =
+            response instanceof HttpResponse ? response.body :
+            (<any>response).error instanceof Blob ? (<any>response).error : undefined;
+
+        let _headers: any = {}; if (response.headers) { for (let key of response.headers.keys()) { _headers[key] = response.headers.get(key); }}
+        if (status === 200) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            let result200: any = null;
+            let resultData200 = _responseText === "" ? null : JSON.parse(_responseText, this.jsonParseReviver);
+            result200 = GetHelloWorldOutput.fromJS(resultData200);
+            return _observableOf(result200);
+            }));
+        } else if (status !== 200 && status !== 204) {
+            return blobToText(responseBlob).pipe(_observableMergeMap(_responseText => {
+            return throwException("An unexpected server error occurred.", status, _responseText, _headers);
+            }));
+        }
+        return _observableOf<GetHelloWorldOutput>(<any>null);
+    }
+
+    /**
      * @return Success
      */
     getSalesSummary(salesSummaryDatePeriod: SalesSummaryDatePeriod): Observable<GetSalesSummaryOutput> {
@@ -20808,6 +20864,42 @@ export interface IGetGeneralStatsOutput {
     bouncePercent: number;
 }
 
+export class GetHelloWorldOutput implements IGetHelloWorldOutput {
+    outPutName!: string | undefined;
+
+    constructor(data?: IGetHelloWorldOutput) {
+        if (data) {
+            for (var property in data) {
+                if (data.hasOwnProperty(property))
+                    (<any>this)[property] = (<any>data)[property];
+            }
+        }
+    }
+
+    init(_data?: any) {
+        if (_data) {
+            this.outPutName = _data["outPutName"];
+        }
+    }
+
+    static fromJS(data: any): GetHelloWorldOutput {
+        data = typeof data === 'object' ? data : {};
+        let result = new GetHelloWorldOutput();
+        result.init(data);
+        return result;
+    }
+
+    toJSON(data?: any) {
+        data = typeof data === 'object' ? data : {};
+        data["outPutName"] = this.outPutName;
+        return data; 
+    }
+}
+
+export interface IGetHelloWorldOutput {
+    outPutName: string | undefined;
+}
+
 export class GetIncomeStatisticsDataOutput implements IGetIncomeStatisticsDataOutput {
     incomeStatistics!: IncomeStastistic[] | undefined;
 
@@ -28260,8 +28352,9 @@ export interface IThemeFooterSettingsDto {
 }
 
 export class ThemeHeaderSettingsDto implements IThemeHeaderSettingsDto {
-    readonly desktopFixedHeader!: boolean;
-    readonly mobileFixedHeader!: boolean;
+    desktopFixedHeader!: boolean;
+    mobileFixedHeader!: boolean;
+    headerSkin!: string | undefined;
     minimizeDesktopHeaderType!: string | undefined;
 
     constructor(data?: IThemeHeaderSettingsDto) {
@@ -28275,8 +28368,9 @@ export class ThemeHeaderSettingsDto implements IThemeHeaderSettingsDto {
 
     init(_data?: any) {
         if (_data) {
-            (<any>this).desktopFixedHeader = _data["desktopFixedHeader"];
-            (<any>this).mobileFixedHeader = _data["mobileFixedHeader"];
+            this.desktopFixedHeader = _data["desktopFixedHeader"];
+            this.mobileFixedHeader = _data["mobileFixedHeader"];
+            this.headerSkin = _data["headerSkin"];
             this.minimizeDesktopHeaderType = _data["minimizeDesktopHeaderType"];
         }
     }
@@ -28292,6 +28386,7 @@ export class ThemeHeaderSettingsDto implements IThemeHeaderSettingsDto {
         data = typeof data === 'object' ? data : {};
         data["desktopFixedHeader"] = this.desktopFixedHeader;
         data["mobileFixedHeader"] = this.mobileFixedHeader;
+        data["headerSkin"] = this.headerSkin;
         data["minimizeDesktopHeaderType"] = this.minimizeDesktopHeaderType;
         return data; 
     }
@@ -28300,6 +28395,7 @@ export class ThemeHeaderSettingsDto implements IThemeHeaderSettingsDto {
 export interface IThemeHeaderSettingsDto {
     desktopFixedHeader: boolean;
     mobileFixedHeader: boolean;
+    headerSkin: string | undefined;
     minimizeDesktopHeaderType: string | undefined;
 }
 
